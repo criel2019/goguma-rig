@@ -6,7 +6,7 @@
 <title>Goguma Rig 更新履歴</title>
 <meta name="description" content="Goguma Rig のバージョンごとの変更点。What changed in each Goguma Rig version.">
 <meta property="og:title" content="Goguma Rig 更新履歴 / Release notes">
-<meta property="og:description" content="1.0.1: ウェイトの品質と、服・髪・小物の追従を改善しました。">
+<meta property="og:description" content="1.0.2: 指の調整で、手のひらと一緒に手全体を動かせるようにしました。">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#18202a">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='28' fill='%2318202a'/%3E%3Cpath d='M36 90 64 40 92 90M64 40V20M42 60H86' fill='none' stroke='%2379c3b3' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cg fill='%23f0c478'%3E%3Ccircle cx='64' cy='20' r='8'/%3E%3Ccircle cx='64' cy='40' r='7'/%3E%3Ccircle cx='36' cy='90' r='7'/%3E%3Ccircle cx='92' cy='90' r='7'/%3E%3C/g%3E%3C/svg%3E">
@@ -68,6 +68,7 @@ header{padding:28px 0 8px}
 .date{color:var(--muted);font-size:.95rem}
 .latest{font-size:.8rem;font-weight:700;color:var(--navy);background:var(--joint);border-radius:4px;padding:1px 8px}
 .summary{font-size:1.15rem;font-weight:500;margin:14px 0 4px}
+.note{color:var(--muted);font-size:.95rem;margin:10px 0 0}
 
 .release h3{font-size:1rem;margin:26px 0 6px;font-weight:700}
 .release ul{margin:0;padding-left:1.2em}
@@ -117,11 +118,39 @@ html[lang="ja"] [data-lang="ja"],html[lang="en"] [data-lang="en"]{display:revert
   </section>
 
   <ol class="chain">
+    <li class="release" id="v1.0.2">
+      <div class="head">
+        <span class="version">1.0.2</span>
+        <span class="date"><span data-lang="ja">2026年10月19日</span><span data-lang="en">October 19, 2026</span></span>
+        <span class="latest"><span data-lang="ja">最新</span><span data-lang="en">Latest</span></span>
+      </div>
+      <p class="summary"><span data-lang="ja">指の調整で、手のひらと一緒に手全体を動かせるようにしました。</span><span data-lang="en">In the finger step, moving the palm now moves the whole hand.</span></p>
+
+      <div data-lang="ja">
+        <h3>修正</h3>
+        <ul>
+          <li>手のひらの中心を動かすと、指が取り残されていた問題（手全体が一緒に動きます。Alt で中心だけ）</li>
+          <li>認識済みの手で手のひら・手首を動かすと「指を認識できませんでした」と表示される問題</li>
+          <li>ギズモのドラッグを取り消しても、チェックを外した指が元に戻らない問題</li>
+        </ul>
+        <p class="note">同じ関節配置なら、リギング結果は 1.0.1 と同じです。</p>
+      </div>
+
+      <div data-lang="en">
+        <h3>Fixed</h3>
+        <ul>
+          <li>Fingers staying behind when the palm centre was moved (the whole hand now moves; Alt moves only the centre)</li>
+          <li>"Fingers not recognised" appearing after moving the palm or wrist of a recognised hand</li>
+          <li>Cancelling a gizmo drag not restoring unchecked fingers</li>
+        </ul>
+        <p class="note">With the same joint placement, rigging results are identical to 1.0.1.</p>
+      </div>
+    </li>
+
     <li class="release" id="v1.0.1">
       <div class="head">
         <span class="version">1.0.1</span>
         <span class="date"><span data-lang="ja">2026年10月19日</span><span data-lang="en">October 19, 2026</span></span>
-        <span class="latest"><span data-lang="ja">最新</span><span data-lang="en">Latest</span></span>
       </div>
       <p class="summary"><span data-lang="ja">ウェイトの品質と、服・髪・小物の追従を改善しました。</span><span data-lang="en">Better weights, and clothes, hair and props now follow the body.</span></p>
 
