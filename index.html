@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Goguma Rig 更新履歴</title>
+<meta name="description" content="Goguma Rig のバージョンごとの変更点。What changed in each Goguma Rig version.">
+<meta property="og:title" content="Goguma Rig 更新履歴 / Release notes">
+<meta property="og:description" content="1.0.1: ウェイトの品質と、服・髪・小物の追従を改善しました。">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#18202a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='28' fill='%2318202a'/%3E%3Cpath d='M36 90 64 40 92 90M64 40V20M42 60H86' fill='none' stroke='%2379c3b3' stroke-width='7' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cg fill='%23f0c478'%3E%3Ccircle cx='64' cy='20' r='8'/%3E%3Ccircle cx='64' cy='40' r='7'/%3E%3Ccircle cx='36' cy='90' r='7'/%3E%3Ccircle cx='92' cy='90' r='7'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#eef1f3;
+  --ink:#1c2530;
+  --muted:#58636f;
+  --rule:#cdd5dc;
+  --bone:#2f8c7c;
+  --joint:#e3a949;
+  --navy:#18202a;
+  --focus:#2f6fd0;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic UI","Meiryo",system-ui,sans-serif;
+  font-size:16px;line-height:1.75;
+}
+a{color:var(--ink);text-decoration-color:var(--bone);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:4px}
+.wrap{max-width:46rem;margin:0 auto;padding-left:20px;padding-right:20px}
+html[lang="ja"] body{word-break:auto-phrase;line-break:strict}
+
+header{padding:28px 0 8px}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:1.05rem;letter-spacing:.01em}
+.brand svg{width:36px;height:36px;flex:none}
+.lang{display:flex;border:1px solid var(--rule);border-radius:999px;padding:3px;background:#fff}
+.lang button{
+  font:inherit;font-size:.85rem;border:0;background:transparent;color:var(--muted);
+  padding:4px 12px;border-radius:999px;cursor:pointer;line-height:1.5
+}
+.lang button[aria-pressed="true"]{background:var(--navy);color:#fff}
+
+.intro{padding:40px 0 8px}
+.intro h1{font-size:clamp(2rem,6vw,2.75rem);line-height:1.2;margin:0 0 12px;font-weight:700;letter-spacing:-.01em}
+.intro p{margin:0;color:var(--muted);max-width:34rem}
+
+/* The release chain: each version is a joint on one bone. */
+.chain{list-style:none;margin:40px 0 0;padding:0}
+.release{position:relative;padding:0 0 56px 52px}
+.release:not(:last-child)::after{
+  content:"";position:absolute;left:11px;top:19px;bottom:-14px;width:4px;border-radius:2px;background:var(--bone)
+}
+.release::before{
+  content:"";position:absolute;left:0;top:6px;width:26px;height:26px;border-radius:50%;
+  background:var(--joint);box-shadow:0 0 0 5px var(--paper);z-index:1
+}
+.release.older::before{width:20px;height:20px;left:3px;top:9px}
+.head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px}
+.version{font-size:clamp(2.25rem,7vw,3rem);font-weight:700;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.older .version{font-size:clamp(1.75rem,5vw,2.1rem)}
+.date{color:var(--muted);font-size:.95rem}
+.latest{font-size:.8rem;font-weight:700;color:var(--navy);background:var(--joint);border-radius:4px;padding:1px 8px}
+.summary{font-size:1.15rem;font-weight:500;margin:14px 0 4px}
+
+.release h3{font-size:1rem;margin:26px 0 6px;font-weight:700}
+.release ul{margin:0;padding-left:1.2em}
+.release li{margin:4px 0}
+.release li::marker{color:var(--bone)}
+
+details{margin-top:26px;border-top:1px solid var(--rule);padding-top:12px}
+summary{cursor:pointer;font-weight:700;color:var(--muted);width:max-content;max-width:100%}
+details[open] summary{color:var(--ink)}
+details ul{margin-top:8px}
+.howto{margin:22px 0 0;padding:12px 16px;background:#fff;border-radius:8px;border-left:4px solid var(--bone);font-size:.95rem}
+
+footer{border-top:1px solid var(--rule);padding:24px 0 48px;color:var(--muted);font-size:.85rem}
+footer p{margin:0}
+
+[data-lang]{display:none}
+html[lang="ja"] [data-lang="ja"],html[lang="en"] [data-lang="en"]{display:revert}
+
+@media (max-width:480px){
+  body{font-size:15px}
+  .release{padding-left:44px}
+  .release:not(:last-child)::after{left:10px}
+  .release::before{width:24px;height:24px}
+  .release.older::before{left:2px}
+}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <div class="bar">
+    <div class="brand">
+      <svg viewBox="0 0 128 128" aria-hidden="true"><rect width="128" height="128" rx="28" fill="#18202a"/><path d="M36 90 64 40 92 90M64 40V20M42 60H86" fill="none" stroke="#79c3b3" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><g fill="#f0c478"><circle cx="64" cy="20" r="8"/><circle cx="64" cy="40" r="7"/><circle cx="36" cy="90" r="7"/><circle cx="92" cy="90" r="7"/></g></svg>
+      <span>Goguma Rig</span>
+    </div>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-set="ja" aria-pressed="true">日本語</button>
+      <button type="button" data-set="en" aria-pressed="false">English</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="intro">
+    <h1><span data-lang="ja">更新履歴</span><span data-lang="en">Release notes</span></h1>
+    <p data-lang="ja">バージョンごとの変更点です。更新するときは、新しい ZIP を新しいフォルダーに展開してください。設定と保存した作業はそのまま使えます。</p>
+    <p data-lang="en">What changed in each version. To update, extract the new ZIP to a new folder. Your settings and saved work carry over.</p>
+  </section>
+
+  <ol class="chain">
+    <li class="release" id="v1.0.1">
+      <div class="head">
+        <span class="version">1.0.1</span>
+        <span class="date"><span data-lang="ja">2026年10月19日</span><span data-lang="en">October 19, 2026</span></span>
+        <span class="latest"><span data-lang="ja">最新</span><span data-lang="en">Latest</span></span>
+      </div>
+      <p class="summary"><span data-lang="ja">ウェイトの品質と、服・髪・小物の追従を改善しました。</span><span data-lang="en">Better weights, and clothes, hair and props now follow the body.</span></p>
+
+      <div data-lang="ja">
+        <h3>改善</h3>
+        <ul>
+          <li>体のウェイトを、Blender の「自動のウェイトで」と同じボーンヒート方式に変更（Blender は不要）</li>
+          <li>服・髪・小物が、接している部分に追従</li>
+          <li>重ね着のジャケットや、ゆったりした袖が体から離れにくく</li>
+          <li>1頂点あたり最大8インフルエンスを、書き出しまで保持</li>
+          <li>パーツが多いモデルのバインドが約4倍速く</li>
+        </ul>
+        <h3>新機能</h3>
+        <ul>
+          <li>関節を置く体を自動で選択（服・髪は配置中だけ非表示）</li>
+          <li>パーツ確認：判断が必要な小物だけを表示</li>
+          <li>関節確認：測定できなかった関節をリギング前に表示</li>
+        </ul>
+        <h3>修正</h3>
+        <ul>
+          <li>FBX が Unity で正しく読み込めない問題</li>
+          <li>一部の髪メッシュでリギングが失敗する問題</li>
+          <li>曲がっていない首・肘・膝の関節位置がずれる問題</li>
+          <li>法線のないモデルのプレビュー表示</li>
+        </ul>
+        <details>
+          <summary>既知の制限</summary>
+          <ul>
+            <li>肘・膝の内側、脇、股は、手作業のウェイトより縮みやすい</li>
+            <li>腕や腰に触れている髪・しっぽは、その部分に一部追従します</li>
+            <li>スカートや髪のボーンはありません。特殊な体型や重ね着は書き出し前に確認してください</li>
+          </ul>
+        </details>
+      </div>
+
+      <div data-lang="en">
+        <h3>Improved</h3>
+        <ul>
+          <li>Body weights use the same bone-heat method as Blender's "With Automatic Weights" (no Blender needed)</li>
+          <li>Clothes, hair and props follow what they rest on</li>
+          <li>Layered jackets and loose sleeves stay on the body</li>
+          <li>Up to 8 influences per vertex are kept through export</li>
+          <li>Models with many parts bind about 4× faster</li>
+        </ul>
+        <h3>New</h3>
+        <ul>
+          <li>The body for joint placement is picked automatically (clothes and hair are hidden only while placing)</li>
+          <li>Part check: only props that need a decision are shown</li>
+          <li>Joint check: joints that couldn't be measured are shown before rigging</li>
+        </ul>
+        <h3>Fixed</h3>
+        <ul>
+          <li>FBX files not importing correctly in Unity</li>
+          <li>Rigging failing on some hair meshes</li>
+          <li>Unbent neck, elbow and knee joints being moved</li>
+          <li>Preview shading for models without normals</li>
+        </ul>
+        <details>
+          <summary>Known limitations</summary>
+          <ul>
+            <li>Inner elbows, knees, armpits and the groin compress more than with hand-painted weights</li>
+            <li>Hair or a tail touching an arm or the hips partly follows it</li>
+            <li>There are no skirt or hair bones. Check unusual proportions and layered clothing before export</li>
+          </ul>
+        </details>
+      </div>
+    </li>
+
+    <li class="release older" id="v1.0.0">
+      <div class="head">
+        <span class="version">1.0.0</span>
+        <span class="date"><span data-lang="ja">2026年10月18日</span><span data-lang="en">October 18, 2026</span></span>
+      </div>
+      <p class="summary"><span data-lang="ja">最初のリリースです。</span><span data-lang="en">First release.</span></p>
+      <ul data-lang="ja">
+        <li>人型モデルの体と指の自動リギング、関節位置の調整</li>
+        <li>GLB / FBX 書き出し</li>
+        <li>複数モデルのバッチ処理、変更したモデルだけ再リギング</li>
+        <li>画面を開かない CLI・MCP</li>
+      </ul>
+      <ul data-lang="en">
+        <li>Automatic body and finger rigging for humanoid models, with joint adjustment</li>
+        <li>GLB / FBX export</li>
+        <li>Batch rigging that re-rigs only the models you changed</li>
+        <li>CLI and MCP without opening a window</li>
+      </ul>
+    </li>
+  </ol>
+</main>
+
+<footer class="wrap">
+  <p data-lang="ja">Goguma Rig は Windows 10 / 11（64bit）用です。</p>
+  <p data-lang="en">Goguma Rig runs on Windows 10 / 11 (64-bit).</p>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement,buttons=document.querySelectorAll('.lang button');
+  function apply(lang){
+    root.lang=lang;
+    document.title=lang==='ja'?'Goguma Rig 更新履歴':'Goguma Rig release notes';
+    buttons.forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.set===lang))});
+  }
+  var saved=null;
+  try{saved=localStorage.getItem('goguma-rig-notes-lang')}catch(e){}
+  var asked=(location.hash.match(/lang=(ja|en)/)||[])[1];
+  var browser=(navigator.languages||[navigator.language||'ja']).some(function(l){return /^ja/i.test(l)})?'ja':'en';
+  apply(asked||saved||browser);
+  buttons.forEach(function(b){b.addEventListener('click',function(){
+    apply(b.dataset.set);
+    try{localStorage.setItem('goguma-rig-notes-lang',b.dataset.set)}catch(e){}
+  })});
+})();
+</script>
+</body>
+</html>
